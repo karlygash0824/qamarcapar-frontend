@@ -133,7 +133,10 @@ const res = await fetch("https://qamarcapar-backend-1.onrender.com/api/contact",
       body: JSON.stringify(form),
     });
     const data = await res.json();
+    if (res.ok) {
     alert(data.message);
+    } else {
+    alert(data.error || "⚠️ Қате: " + data.message);  
   };
 
   return (

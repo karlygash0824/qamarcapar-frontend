@@ -6,7 +6,7 @@ function Packages() {
       id: 1,
       title: "Эконом пакет",
       days: "10 күн",
-      price: "700,000 тг",
+      price: "1190$",
       hotel: "3⭐ Мекке / Мәдина",
       flight: "Билет бар",
     },
@@ -14,7 +14,7 @@ function Packages() {
       id: 2,
       title: "Стандарт пакет",
       days: "14 күн",
-      price: "900,000 тг",
+      price: "1500$",
       hotel: "4⭐ Қасиетті Харем маңында",
       flight: "Билет бар",
     },
@@ -22,7 +22,7 @@ function Packages() {
       id: 3,
       title: "VIP пакет",
       days: "14 күн",
-      price: "1,400,000 тг",
+      price: "1700$",
       hotel: "5⭐ ZamZam / Hilton",
       flight: "Бизнес-класс",
     },
@@ -31,7 +31,6 @@ function Packages() {
   const [selected, setSelected] = useState(null);
   const [form, setForm] = useState({ name: "", phone: "" });
 
-  // ✅ Жаңартылған handleSubmit функциясы
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,13 +40,7 @@ function Packages() {
     }
 
     try {
-      console.log("📤 Жіберілетін мәлімет:", {
-        ...form,
-        package: selected.title,
-      });
-
-    const response = await fetch("https://qamarcapar-backend-1.onrender.com/api/register", {
- 
+      const response = await fetch("https://qamarcapar-backend-1.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,17 +49,15 @@ function Packages() {
         }),
       });
 
-      console.log("📥 Серверден жауап:", response.status);
-
       const data = await response.json();
-      console.log("🔍 Сервер жауап JSON:", data);
+      console.log("📥 Серверден жауап:", response.status, data);
 
       if (response.ok) {
-        alert("✅ Сәтті тіркелдіңіз!");
+        alert(data.message || "✅ Сәтті тіркелдіңіз!");
         setSelected(null);
         setForm({ name: "", phone: "" });
       } else {
-        alert("Қате пайда болды. Кейінірек қайталап көріңіз.");
+        alert(data.error || data.message || "⚠️ Қате пайда болды!");
       }
     } catch (err) {
       console.error("❌ Сервермен байланыс қатесі:", err);
@@ -86,9 +77,7 @@ function Packages() {
             key={pkg.id}
             className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 w-72 p-6 text-center"
           >
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">
-              {pkg.title}
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-3">{pkg.title}</h2>
             <div className="text-gray-600 space-y-1 mb-4">
               <p>⏳ Ұзақтығы: {pkg.days}</p>
               <p>💰 Бағасы: {pkg.price}</p>
@@ -148,4 +137,5 @@ function Packages() {
 }
 
 export default Packages;
+
 
