@@ -46,7 +46,8 @@ function Packages() {
         package: selected.title,
       });
 
-      const response = await fetch("http://localhost:5000/api/register", {
+    const response = await fetch("https://qamarcapar-backend-1.onrender.com/api/register", {
+ 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
